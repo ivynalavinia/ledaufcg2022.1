@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-10-18T15:02:37.512-0300</date>
+  <logger>IVYNA LAVINIA DE OLIVEIRA RUFINO</logger>
+  <level>FINE</level>
+  <message>File 120210129-IVYNA LAVINIA DE OLIVEIRA RUFINO.zip was received. It was sent by IVYNA LAVINIA DE OLIVEIRA RUFINO from IP 192.168.1.7 at 18-10-2022 15*02*37</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-10-22T19:10:15.447-0300</date>
+  <logger>IVYNA LAVINIA DE OLIVEIRA RUFINO</logger>
+  <level>FINE</level>
+  <message>File 120210129-IVYNA LAVINIA DE OLIVEIRA RUFINO.zip was received. It was sent by IVYNA LAVINIA DE OLIVEIRA RUFINO from IP 192.168.1.7 at 22-10-2022 19*10*15</message>
+</record>
