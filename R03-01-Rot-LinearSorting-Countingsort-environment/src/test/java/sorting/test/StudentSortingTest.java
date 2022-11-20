@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import sorting.AbstractSorting;
+import sorting.linearSorting.CountingSort;
+import sorting.linearSorting.ExtendedCountingSort;
 
 public class StudentSortingTest {
 
@@ -36,10 +38,7 @@ public class StudentSortingTest {
 	 * do aluno
 	 */
 	private void getImplementation() {
-		// TODO O aluno deve instanciar sua implementação abaixo ao invés de
-		// null
-		this.implementation = null;
-		Assert.fail("Implementation not provided");
+		this.implementation = new ExtendedCountingSort();
 	}
 
 	public void populaVetorTamanhoPar(Integer[] arrayPadrao) {
@@ -106,4 +105,44 @@ public class StudentSortingTest {
 	 * SEGUIR A ESTRUTURA DOS MÉTODOS DE TESTE ACIMA DESCRITOS, ORDENANDO APENAS
 	 * UMA PARTE DO ARRAY.
 	 */
+	
+	@Test
+	public void sortOneElementArray () {
+		genericTest(new Integer[] { 6 });
+	}
+	
+	@Test
+	public void sortDifferentPositionsTest() {
+		Integer[] array1 = new Integer[] { 30, 28, 7, 29 };
+		Integer[] array2 = new Integer[] { 30, 28, 7, 29 };
+		Integer[] array3 = new Integer[] { 30, 28, 7, 29, 5 };
+		
+		implementation.sort(array1, 0, 1);
+		implementation.sort(array2, 0, 0);
+		implementation.sort(array3, 2, 4);
+		
+		Assert.assertArrayEquals(new Integer[] { 28, 30, 7, 29 }, array1);
+		Assert.assertArrayEquals(new Integer[] { 30, 28, 7, 29 }, array2);
+		Assert.assertArrayEquals(new Integer[] { 30, 28, 5, 7, 29 }, array3);
+	}
+	
+	@Test
+	public void sortNegativeElementsTest() {
+		Integer[] array = new Integer[] { -30, -228, -87, -29, 5, 0, -1 };
+		
+		implementation.sort(array, 0, 6);
+		
+		Assert.assertArrayEquals(new Integer[] { -228, -87, -30, -29, -1, 0, 5 }, array);
+	}
+	
+	@Test
+	public void sortInvalidInputsTest() {
+		implementation.sort(vetorTamImpar, -1, 3);
+		implementation.sort(vetorTamImpar, 9, 11);
+		implementation.sort(vetorTamPar, 10, 10);
+		implementation.sort(vetorTamPar, 10, 8);
+		
+		Assert.assertArrayEquals(new Integer[] { 6, 41, 32, 7, 26, 4, 37, 49, 11, 18, 36 }, vetorTamImpar);
+		Assert.assertArrayEquals(new Integer[] { 30, 28, 7, 29, 11, 26, 4, 22, 23, 31 }, vetorTamPar);
+	}
 }
