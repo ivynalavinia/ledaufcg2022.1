@@ -2,87 +2,93 @@ package adt.linkedList;
 
 public class SingleLinkedListImpl<T> implements LinkedList<T> {
 
-	protected SingleLinkedListNode<T> head;
+    protected SingleLinkedListNode<T> head;
 
-	public SingleLinkedListImpl() {
-		this.head = new SingleLinkedListNode<T>();
-	}
-//TODO mudar as funções
-	@Override
-	public boolean isEmpty() {
-		return this.head.isNIL();
-	}
+    public SingleLinkedListImpl() {
+        this.head = new SingleLinkedListNode<T>();
+    }
 
-	@Override
-	public int size() {
-		int size = 0;
-		SingleLinkedListNode<T> currentNode = this.head;
+    @Override
+    public boolean isEmpty() {
+        return head.isNIL();
+    }
 
-		while (!currentNode.isNIL()) {
-			currentNode = currentNode.getNext();
-			size++;
-		}
+    @Override
+    public int size() {
+        SingleLinkedListNode<T> nodeAux = head;
+        int size = 0;
 
-		return size;
-	}
+        while (!nodeAux.isNIL()) {
+            nodeAux = nodeAux.getNext();
+            size += 1;
+        }
 
-	@Override
-	public T search(T element) {
-		SingleLinkedListNode<T> currentNode = this.head;
+        return size;
+    }
 
-		while (!currentNode.isNIL() && !currentNode.getData().equals(element))
-			currentNode = currentNode.getNext();
+    @Override
+    public T search(T element) {
+        SingleLinkedListNode<T> nodeAux = head;
 
-		return currentNode.getData();
-	}
+        while (!nodeAux.isNIL()) {
+            if (nodeAux.getData().equals(element)) {
+                return nodeAux.getData();
+            }
+            nodeAux = nodeAux.getNext();
+        }
 
-	@Override
-	public void insert(T element) {
-		if (element != null) {
-			SingleLinkedListNode<T> currentNode = this.head;
+        return null;
+    }
 
-			while (!currentNode.isNIL())
-				currentNode = currentNode.getNext();
+    @Override
+    public void insert(T element) {
+        if (element != null) {
+            SingleLinkedListNode<T> nodeAux = head;
 
-			currentNode.setData(element);
-			currentNode.setNext(new SingleLinkedListNode<>());
-		}
-	}
+            while (!nodeAux.isNIL()) {
+                nodeAux = nodeAux.getNext();
+            }
 
-	@Override
-	public void remove(T element) {
-		if (element != null && !this.isEmpty()) {
-			SingleLinkedListNode<T> currentNode = this.head;
+            nodeAux.setData(element);
+            nodeAux.setNext(new SingleLinkedListNode<>());
+        }
+    }
 
-			while (!currentNode.isNIL() && !currentNode.getData().equals(element))
-				currentNode = currentNode.getNext();
+    @Override
+    public void remove(T element) {
+        if (element != null && !isEmpty()) {
+            SingleLinkedListNode<T> nodeAux = head;
 
-			if (!currentNode.isNIL()){
-				currentNode.setData(currentNode.getNext().getData());
-				currentNode.setNext(currentNode.getNext().getNext());
-			}
-		}
-	}
+            while (!nodeAux.isNIL() && !nodeAux.getData().equals(element)) {
+                nodeAux = nodeAux.getNext();
+            }
 
-	@Override
-	public T[] toArray() {
-		T[] array = (T[]) new Object[this.size()];
-		SingleLinkedListNode<T> currentNode = this.head;
+            if (!nodeAux.isNIL()) {
+                nodeAux.setData(nodeAux.getNext().getData());
+                nodeAux.setNext(nodeAux.getNext().getNext());
+            }
+        }
+    }
 
-		for (int i = 0; i < array.length; i++) {
-			array[i] = currentNode.getData();
-			currentNode = currentNode.getNext();
-		}
+    @Override
+    public T[] toArray() {
+        T[] array = (T[]) new Object[size()];
+        SingleLinkedListNode<T> nodeAux = head;
 
-		return array;
-	}
+        for (int i = 0; i < array.length; i++) {
+            array[i] = nodeAux.getData();
+            nodeAux = nodeAux.getNext();
+        }
 
-	public SingleLinkedListNode<T> getHead() {
-		return head;
-	}
+        return array;
+    }
 
-	public void setHead(SingleLinkedListNode<T> head) {
-		this.head = head;
-	}
+    public SingleLinkedListNode<T> getHead() {
+        return head;
+    }
+
+    public void setHead(SingleLinkedListNode<T> head) {
+        this.head = head;
+    }
 
 }

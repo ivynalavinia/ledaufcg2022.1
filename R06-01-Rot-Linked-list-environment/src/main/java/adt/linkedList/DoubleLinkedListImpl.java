@@ -1,109 +1,109 @@
 package adt.linkedList;
 
-public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
-		DoubleLinkedList<T> {
+public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
-	protected DoubleLinkedListNode<T> last;
-	//TODO mudar as funções e entender porque ele implementou outra insert aqui, porque não tinha insert, só insertFirst
-	@Override
-	public void insert(T element) {
-		if (element != null) {
-			DoubleLinkedListNode<T>
-					newNode = new DoubleLinkedListNode<>(),
-					nil = new DoubleLinkedListNode<>();
+    protected DoubleLinkedListNode<T> last;
 
-			newNode.setData(element);
-			newNode.setNext(nil);
-			nil.setPrevious(newNode);
-			this.last.setNext(newNode);
-			newNode.setPrevious(this.last);
+    public DoubleLinkedListImpl() {
+        this.last = new DoubleLinkedListNode<>();
+        this.head = this.last;
+    }
 
-			if (this.last.isNIL())
-				this.head = newNode;
+    @Override
+    public void insert(T element) {
+        if (element != null) {
+            DoubleLinkedListNode<T> elementNode = new DoubleLinkedListNode<>();
+            DoubleLinkedListNode<T> emptyNode = new DoubleLinkedListNode<>();
 
-			this.last = newNode;
-		}
-	}
+            last.setNext(elementNode);
 
-	@Override
-	public void insertFirst(T element) {
-		if (element != null) {
-			DoubleLinkedListNode<T>
-					newNode = new DoubleLinkedListNode<>(),
-					nil = new DoubleLinkedListNode<>();
+            elementNode.setData(element);
+            elementNode.setNext(emptyNode);
+            elementNode.setPrevious(last);
 
-			newNode.setData(element);
-			newNode.setNext(this.head);
-			newNode.setPrevious(nil);
-			nil.setNext(newNode);
-			((DoubleLinkedListNode<T>) this.head).setPrevious(newNode);
+            emptyNode.setPrevious(elementNode);
 
-			if (this.head.isNIL())
-				this.last = newNode;
+            if (last.isNIL()) {
+                head = elementNode;
+            }
 
-			this.head = newNode;
-		}
-	}
-// TODO entender porque ele definiiu um remove, igual insert, só tinha removeFirst
-	@Override
-	public void remove(T element) {
-		if (element != null && !this.isEmpty()) {
-			if (this.head.getData().equals(element))
-				this.removeFirst();
-			else if (this.last.getData().equals(element))
-				this.removeLast();
-			else {
-				DoubleLinkedListNode<T> currentNode = (DoubleLinkedListNode<T>) this.head;
+            last = elementNode;
+        }
+    }
 
-				while (!currentNode.isNIL() && !currentNode.getData().equals(element))
-					currentNode = (DoubleLinkedListNode<T>) currentNode.getNext();
+    @Override
+    public void insertFirst(T element) {
+        if (element != null) {
+            DoubleLinkedListNode<T> elementNode = new DoubleLinkedListNode<>();
+            DoubleLinkedListNode<T> emptyNode = new DoubleLinkedListNode<>();
 
-				if (!currentNode.isNIL()){
-					currentNode.getPrevious().setNext(currentNode.getNext());
-					((DoubleLinkedListNode<T>) currentNode.getNext()).setPrevious(currentNode.getPrevious());
-				}
-			}
-		}
-	}
+            elementNode.setData(element);
+            elementNode.setNext(head);
+            elementNode.setPrevious(emptyNode);
 
-	@Override
-	public void removeFirst() {
-		if (!this.isEmpty()){
-			this.head = this.head.getNext();
+            ((DoubleLinkedListNode<T>) head).setPrevious(elementNode);
 
-			if (this.head.isNIL())
-				this.last = ((DoubleLinkedListNode<T>) this.head);
-			else {
-				DoubleLinkedListNode<T> nil = new DoubleLinkedListNode<>();
+            if (head.isNIL()) {
+                last = elementNode;
+            }
 
-				((DoubleLinkedListNode<T>) this.head).setPrevious(nil);
-				nil.setNext(this.head);
-			}
-		}
-	}
+            head = elementNode;
+        }
+    }
 
-	@Override
-	public void removeLast() {
-		if (!this.isEmpty()){
-			this.last = this.last.getPrevious();
+    @Override
+    public void remove(T element) {
+        if (element != null && !isEmpty()) {
 
-			if (this.last.isNIL())
-				this.head = this.last;
-			else {
-				DoubleLinkedListNode<T> nil = new DoubleLinkedListNode<>();
+            if (head.getData().equals(element)) {
+                removeFirst();
+            } else if (last.getData().equals(element)) {
+                removeLast();
+            } else {
+                DoubleLinkedListNode<T> nodeAux = (DoubleLinkedListNode<T>) head;
 
-				this.last.setNext(nil);
-				nil.setPrevious(this.last);
-			}
-		}
-	}
+                while (!nodeAux.getData().equals(element) && !nodeAux.isNIL()) {
+                    nodeAux = (DoubleLinkedListNode<T>) nodeAux.getNext();
+                }
 
-	public DoubleLinkedListNode<T> getLast() {
-		return last;
-	}
+                nodeAux.getPrevious().setNext(nodeAux.getNext());
+                ((DoubleLinkedListNode<T>) nodeAux.getNext()).setPrevious(nodeAux.getPrevious());
+            }
+        }
+    }
 
-	public void setLast(DoubleLinkedListNode<T> last) {
-		this.last = last;
-	}
+    @Override
+    public void removeFirst() {
+        if (!isEmpty()) {
+            head = head.getNext();
+
+            if (head.isNIL()) {
+                last = ((DoubleLinkedListNode<T>) head);
+            } else {
+                ((DoubleLinkedListNode<T>) head).setPrevious(new DoubleLinkedListNode<>());
+            }
+        }
+    }
+
+    @Override
+    public void removeLast() {
+        if (!isEmpty()) {
+            last = last.getPrevious();
+
+            if (last.isNIL())
+                head = last;
+            else {
+                last.setNext(new DoubleLinkedListNode<>());
+            }
+        }
+    }
+
+    public DoubleLinkedListNode<T> getLast() {
+        return last;
+    }
+
+    public void setLast(DoubleLinkedListNode<T> last) {
+        this.last = last;
+    }
 
 }
