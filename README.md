@@ -1,4 +1,4 @@
-# ledaufcg
+# ledaufcg2022.1
 
 Resoluções de roteiros e provas da disciplina de Laboratório de Estruturas de Dados e Algoritmos da UFCG, período 2022.1.
 
